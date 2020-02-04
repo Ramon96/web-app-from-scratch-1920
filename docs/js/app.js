@@ -39,13 +39,16 @@ function getMatchesByName(name) {
 
 function init(data){
     data.matches.forEach(match => {
-        console.log(node, match)
+        createMatchNode(match, "p", mainElement)
     })
 }
 
-// function createMatchNode(content, elementType, )
+function createMatchNode(content, elementType, targetElement){
+    const element = document.createElement(elementType);
+    element.textContent = content;
 
-
+    targetElement.append(element)
+}
 
 /*
 substract or add to timestamp for the correct timezone
