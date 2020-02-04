@@ -6,14 +6,14 @@ const seachText = document.getElementById('searchText')
 
 // mainElement.insertAdjacentHTML('afterend', '<div id="two">two</div>');
 
+
+form.addEventListener('submit', handleForm);
+
 function handleForm(event) { 
     event.preventDefault(); 
     // console.log(seachText.value)
     getMatchesByName(seachText.value);
 } 
-
-form.addEventListener('submit', handleForm);
-// searchButton.addEventListener('click', () => {getMatchesByName("juiian")});
 
 function getMatchesByName(name) {
     fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
@@ -31,14 +31,21 @@ function getMatchesByName(name) {
                     return res.json();
                 })
                 .then(function(json){
-                    console.log(json)
+                    init(json);
                 })
         })
         .catch(err => console.log(err))
 }
 
+function init(data){
+    data.matches.forEach(match => {
+        console.log(node, match)
+    })
+}
 
-// getMatchesByName("yabby");
+// function createMatchNode(content, elementType, )
+
+
 
 /*
 substract or add to timestamp for the correct timezone
@@ -64,7 +71,7 @@ substract or add to timestamp for the correct timezone
 */
 
 // added the euw timezone
-var myDate = new Date(1580666276695-10800 *1000);
-console.log(myDate.toGMTString()+"<br>"+myDate.toLocaleString());
+// var myDate = new Date(1580666276695-10800 *1000);
+// console.log(myDate.toGMTString()+"<br>"+myDate.toLocaleString());
 
 
