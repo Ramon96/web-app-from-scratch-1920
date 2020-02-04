@@ -1,14 +1,22 @@
 const mainElement = document.getElementsByTagName('main')[0];
 const searchButton = document.getElementById('searchButton');
+const form = document.getElementById('searchSummoner');
+const seachText = document.getElementById('searchText')
 // const cors = "https://cors-anywhere.herokuapp.com/"
 
 // mainElement.insertAdjacentHTML('afterend', '<div id="two">two</div>');
 
+function handleForm(event) { 
+    event.preventDefault(); 
+    // console.log(seachText.value)
+    getMatchesByName(seachText.value);
+} 
 
-searchButton.addEventListener('click', () => {getMatchesByName("juiian")});
+form.addEventListener('submit', handleForm);
+// searchButton.addEventListener('click', () => {getMatchesByName("juiian")});
 
 function getMatchesByName(name) {
-    fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
+    fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
         .then((res) => {
             return res.json();
         })
@@ -18,7 +26,7 @@ function getMatchesByName(name) {
         })
         .then(function(data){
             // console.log(data.accountId)
-            fetch(`https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${data.accountId}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
+            fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${data.accountId}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
                 .then(function(res){
                     return res.json();
                 })
