@@ -2,6 +2,8 @@ const mainElement = document.getElementsByTagName('main')[0];
 const searchButton = document.getElementById('searchButton');
 const form = document.getElementById('searchSummoner');
 const seachText = document.getElementById('searchText')
+// incase of 403, it may be that the key has been expired (24 hours)
+const apiKey = "RGAPI-b6862415-5cbc-47c0-a5f7-86a1394a3014";
 // const cors = "https://cors-anywhere.herokuapp.com/"
 
 // mainElement.insertAdjacentHTML('afterend', '<div id="two">two</div>');
@@ -11,12 +13,12 @@ form.addEventListener('submit', handleForm);
 
 function handleForm(event) { 
     event.preventDefault(); 
-    // console.log(seachText.value)
     getMatchesByName(seachText.value);
 } 
 
+
 function getMatchesByName(name) {
-    fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
+    fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`)
         .then((res) => {
             return res.json();
         })
@@ -26,12 +28,13 @@ function getMatchesByName(name) {
         })
         .then(function(data){
             // console.log(data.accountId)
-            fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${data.accountId}?api_key=RGAPI-63b0f17a-6b45-4eea-8700-540c8983a88a`)
+            fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${data.accountId}?api_key=${apiKey}`)
                 .then(function(res){
                     return res.json();
                 })
                 .then(function(json){
                     init(json);
+                    console.log(json)
                 })
         })
         .catch(err => console.log(err))
@@ -39,7 +42,8 @@ function getMatchesByName(name) {
 
 function init(data){
     data.matches.forEach(match => {
-        createMatchNode(match, "p", mainElement)
+        createMatchNode(match.timestamp, "p", mainElement);
+        // console.log(match.champion)
     })
 }
 
