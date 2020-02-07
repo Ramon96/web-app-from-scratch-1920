@@ -6,7 +6,6 @@ const seachText = document.getElementById('searchText')
 const apiKey = "RGAPI-b6862415-5cbc-47c0-a5f7-86a1394a3014";
 // const cors = "https://cors-anywhere.herokuapp.com/"
 
-// mainElement.insertAdjacentHTML('afterend', '<div id="two">two</div>');
 
 
 form.addEventListener('submit', handleForm);
@@ -23,62 +22,107 @@ function getMatchesByName(name) {
             return res.json();
         })
         .then((json) => {
-            // console.log(json);
             return json;
         })
         .then(function(data){
-            // console.log(data.accountId)
             fetch(`https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${data.accountId}?api_key=${apiKey}`)
                 .then(function(res){
                     return res.json();
                 })
                 .then(function(json){
-                    init(json);
-                    console.log(json)
+                    return json.matches.map(key => {
+                        return {
+                            region: key.platformId,
+                            championId: key.champion,
+                            time: convertTimestamp(key.timestamp, key.platformId),
+                            lane: key.lane,
+                            premade: key.role,
+                            queue: key.queue,
+                            season: key.season
+                        }
+                    })
+                })
+                .then((results) => {
+                    console.log(results);
+                    init(results);
                 })
         })
         .catch(err => console.log(err))
 }
 
 function init(data){
-    data.matches.forEach(match => {
-        createMatchNode(match.timestamp, "p", mainElement);
-        // console.log(match.champion)
+    while(mainElement.firstChild){
+        mainElement.removeChild(mainElement.firstChild);
+    }
+
+    data.forEach(match => {
+        createMatchNode(match.time, "p", mainElement);
     })
 }
 
 function createMatchNode(content, elementType, targetElement){
     const element = document.createElement(elementType);
     element.textContent = content;
-
     targetElement.append(element)
 }
 
-/*
-substract or add to timestamp for the correct timezone
-  "shifts": {
-    "OC1": -46800,
-    "JP1": -43200,
-    "KR": -39600,
-    "RU": -28800,
-    "EUN1": -21600,
-    "TR1": -18000,
-    "EUW1": -10800,
-    "BR1": -3600,
-    "LA2": 0,
-    "LA1": 7200,
-    "NA1": 10800,
-    "PH": 43200,
-    "ID1": 43200,
-    "VN": 46800,
-    "SG": 50400,
-    "TH": 54000,
-    "TW": 57600
-  }
-*/
-
-// added the euw timezone
-// var myDate = new Date(1580666276695-10800 *1000);
-// console.log(myDate.toGMTString()+"<br>"+myDate.toLocaleString());
+function convertTimestamp(timestamp, region){
+    let timeDifference;
+    switch(region){
+        case "OC1":
+            timeDifference = -46800
+        break; 
+        case "JP1": 
+            timeDifference = -43200
+            break;
+        case "KR":
+            timeDifference = -39600
+            break;
+        case "RU": 
+            timeDifference = -28800
+            break;
+        case "EUN1": 
+            timeDifference =- 21600
+            break;
+        case "TR1":
+            timeDifference = -18000
+            break;
+        case "EUW1":
+            timeDifference = -10800
+            break;
+        case "BR1":
+            timeDifference = -3600
+            break;
+        case "LA2": 
+            timeDifference = 0
+            break;
+        case "LA1": 
+            timeDifference = 7200
+            break;
+        case "NA1": 
+            timeDifference = 10800
+            break;
+        case "PH": 
+            timeDifference = 43200
+            break;
+        case "ID1": 
+            timeDifference = 43200
+            break;
+        case "VN": 
+            timeDifference = 46800
+            break;
+        case "SG": 
+            timeDifference = 50400
+            break;
+        case "TH": 
+            timeDifference = 54000
+            break;
+        case "TW": 
+            timeDifference =  57600
+            break;
+    }
+        var humanReadable  = new Date(timestamp - timeDifference * 1000).toLocaleString();
+        return humanReadable;
+}
 
 
