@@ -1,7 +1,7 @@
-export async function fetchSummoner(url, apiKey){
+export async function fetchSummoner(url){
     let summonerData = fetch(url);
     let response = await summonerData;
-    let hanldeResponse = await response.json();
+    let handleResponse = await response.json();
 
-    return hanldeResponse;
+    return handleResponse;
 }
