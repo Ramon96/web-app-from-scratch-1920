@@ -39,12 +39,35 @@ async function getData(name){
 //         .catch(err => console.log(err))
 
     const summonerInformation = await fetchSummoner(url, apiKey);
-    const results = matchHistory(summonerInformation);
+    const results = matchHistory(summonerInformation, apiKey);
+    return results;
 }
 
 
-function matchHistory(summonerData){
-    console.log(summonerData);
+function matchHistory(summonerData, apiKey){
+    const matchApi = `https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?api_key=${apiKey}`;
+   
+   fetch(matchApi)
+        .then(function(res){
+            return res.json();
+        })
+        .then(function(json){
+            return json.matches.map(key => {
+                return {
+                    region: key.platformId,
+                    championId: key.champion,
+                    time: convertTimestamp(key.timestamp, key.platformId),
+                    lane: key.lane,
+                    premade: key.role,
+                    queue: key.queue,
+                    season: key.season
+                }
+            })
+        })
+        .then((results) => {
+            return results;
+        })
+    // console.log(summonerData);
 }
 
 export {getData} 
