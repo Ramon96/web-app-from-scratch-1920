@@ -65,6 +65,7 @@ function matchHistory(summonerData, apiKey){
             })
         })
         .then((results) => {
+            console.log(results)
             return results;
         })
     // console.log(summonerData);
