@@ -56,3 +56,5 @@ function convertTimestamp(timestamp, region){
         var humanReadable  = new Date(timestamp - timeDifference * 1000).toLocaleString();
         return humanReadable;
 }
+
+export {convertTimestamp}
