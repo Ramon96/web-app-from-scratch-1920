@@ -1,3 +1,5 @@
+import { convertTimestamp } from "./convertTime.js";
+
 //retrieves and cleans the data by league of legends summoner ID
 function getData(name){
     // incase of 403, it may be that the key has been expired (24 hours)
