@@ -6,41 +6,18 @@ init();
 
 
 function init(){
-    const mainElement = document.getElementsByTagName('main')[0];
-
     document.getElementById('searchSummoner').addEventListener('submit', (e) => {
         e.preventDefault(); 
         getData(document.getElementById('searchText').value)
             .then(function(data){
+                removeDom(document.getElementsByTagName('main')[0]);
                 data.forEach(match => {
-                createMatchNode(match.time, "p", mainElement);
-                console.log('hallo')
+                createMatchNode(match.time, "p", document.getElementsByTagName('main')[0]);
                 })
             })
-
-
-
-    // data.forEach(match => {
-    //     // createMatchNode(match.time, "p", mainElement);
-    //     console.log('hallo')
-    // })
     });
 
-
-    // while(mainElement.firstChild){
-    //     mainElement.removeChild(mainElement.firstChild);
-    // }
-
-    // data.forEach(match => {
-    //     createMatchNode(match.time, "p", mainElement);
-    // })
 }
-
-// function createMatchNode(content, elementType, targetElement){
-//     const element = document.createElement(elementType);
-//     element.textContent = content;
-//     targetElement.append(element)
-// }
 
 
 
