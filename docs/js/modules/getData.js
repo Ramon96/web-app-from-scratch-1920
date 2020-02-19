@@ -38,36 +38,52 @@ async function getData(name){
 //         })
 //         .catch(err => console.log(err))
 
-    const summonerInformation = await fetchSummoner(url, apiKey);
-    const results = matchHistory(summonerInformation, apiKey);
+    const summonerInformation = await fetchSummoner(url);
+    const results = await matchHistory(summonerInformation, apiKey);
     return results;
 }
 
 
-function matchHistory(summonerData, apiKey){
+async function matchHistory(summonerData, apiKey){
     const matchApi = `https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?api_key=${apiKey}`;
    
-   fetch(matchApi)
-        .then(function(res){
-            return res.json();
-        })
-        .then(function(json){
-            return json.matches.map(key => {
-                return {
-                    region: key.platformId,
-                    championId: key.champion,
-                    time: convertTimestamp(key.timestamp, key.platformId),
-                    lane: key.lane,
-                    premade: key.role,
-                    queue: key.queue,
-                    season: key.season
-                }
-            })
-        })
-        .then((results) => {
-            console.log(results)
-            return results;
-        })
+    let matchHistory = fetch(matchApi);
+    let response = await matchHistory;
+    let handleResponse = await response.json();
+
+    let matchlist = handleResponse.matches.map(key => {
+        return {
+            region: key.platformId,
+            championId: key.champion,
+            time: convertTimestamp(key.timestamp, key.platformId),
+            lane: key.lane,
+            premade: key.role,
+            queue: key.queue,
+            season: key.season
+        }  
+    });
+    console.log(matchlist);
+    return matchlist;
+        // .then(function(res){
+        //     return res.json();
+        // })
+        // .then(function(json){
+        //     return json.matches.map(key => {
+        //         return {
+        //             region: key.platformId,
+        //             championId: key.champion,
+        //             time: convertTimestamp(key.timestamp, key.platformId),
+        //             lane: key.lane,
+        //             premade: key.role,
+        //             queue: key.queue,
+        //             season: key.season
+        //         }
+        //     })
+        // })
+        // .then((results) => {
+        //     console.log(results)
+        //     return results;
+        // })
     // console.log(summonerData);
 }
 
