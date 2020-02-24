@@ -14,7 +14,7 @@ async function getData(name){
     const summonerInformation = await fetchSummoner(url);
     const matchHistory = await fetchMatchHistory(summonerInformation, apiKey);
     const cleanData = cleanUp(matchHistory)
-    console.log(cleanData);
+    console.log(matchHistory);
     // console.log(JSON.stringify(cleanData, 4, null))
     return cleanData;
 }
@@ -29,7 +29,8 @@ function cleanUp(matchHistory){
             lane: key.lane,
             premade: key.role,
             queue: key.queue, 
-            season: key.season
+            season: key.season,
+            gameKey: key.gameId
         }   
     })
 }
