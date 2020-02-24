@@ -7,7 +7,7 @@ import { fetchMatchHistory } from "./helpers/fetchMatchHistory.js";
 //retrieves and cleans the data by league of legends summoner ID
 async function getData(name){
 //     // incase of 403, it may be that the key has been expired (24 hours)
-    const apiKey = "RGAPI-b454aa23-b8b5-4284-80a0-a93007b60d6c";
+    const apiKey = "RGAPI-45100875-d616-4769-b33e-4c6ac48ab89b";
     const url = `https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`;
 
 
@@ -25,7 +25,7 @@ function cleanUp(matchHistory){
         return {
             region: key.platformId,
             championId: key.champion,
-            time: convertTimestamp(key.timestamp, key.platformId),
+            time: convertTimestamp(key.timestamp),
             lane: key.lane,
             premade: key.role,
             queue: key.queue, 

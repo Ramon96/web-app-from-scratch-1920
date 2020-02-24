@@ -6,7 +6,7 @@ import { nodeElement } from "./modules/createComponent.js";
 
 
 init();
-// console.log(Route)
+
 
 function init(){
     document.getElementById('searchSummoner').addEventListener('submit', (e) => {
@@ -22,11 +22,6 @@ function init(){
             })
     });
 
-    // Routie.Route({
-    //     'lol' : function() {
-    //         console.log("lol ik ben op de home")
-    //     }
-    // })
 }
 
 
