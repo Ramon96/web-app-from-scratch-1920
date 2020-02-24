@@ -2,6 +2,8 @@ import { convertTimestamp } from "./convertTime.js";
 import { fetchSummoner } from "./helpers/fetchSummoner.js";
 import { fetchMatchHistory } from "./helpers/fetchMatchHistory.js";
 
+
+
 //retrieves and cleans the data by league of legends summoner ID
 async function getData(name){
 //     // incase of 403, it may be that the key has been expired (24 hours)
@@ -13,6 +15,7 @@ async function getData(name){
     const matchHistory = await fetchMatchHistory(summonerInformation, apiKey);
     const cleanData = cleanUp(matchHistory)
     console.log(cleanData);
+    // console.log(JSON.stringify(cleanData, 4, null))
     return cleanData;
 }
 

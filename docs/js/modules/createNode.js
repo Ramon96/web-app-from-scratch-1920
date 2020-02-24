@@ -1,7 +1,11 @@
 function createMatchNode(content, elementType, targetElement){
     const element = document.createElement(elementType);
     element.textContent = content;
-    targetElement.append(element)
+    targetElement.appendChild(element)
+
+    return element;
 }
 
-export {createMatchNode};
+
+
+export {createMatchNode}; 
