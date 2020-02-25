@@ -2,7 +2,6 @@ import {showSelected} from "./filterChampion.js"
 
 
 function createFilter(data, username) {
-    // const champions = [];
 
     const champions = [...new Set(data.map(key => {
         return key.championId
@@ -14,8 +13,6 @@ function createFilter(data, username) {
         let option = new Option(champions[i], champions[i])
         dropdown.appendChild(option);
     }
-
-    console.log(data)
 
     dropdown.addEventListener("change", (e)=>{
         showSelected(e.target.value, data, username)

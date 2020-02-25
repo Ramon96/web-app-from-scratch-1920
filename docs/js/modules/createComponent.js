@@ -10,7 +10,7 @@ function overview(matchDetails, username){
     return container;
 }
 
-function detail(matchId){
+function detail(matchData){
 
 }
 

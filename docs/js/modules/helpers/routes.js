@@ -33,11 +33,16 @@ const Routes = {
     },
     'match/:id/:username' : function(id, username){
         const main = document.getElementsByTagName('main')[0];
+        const feedbackbar = document.getElementsByTagName('h2')[0];
+
+        preloader.Show("preloader");
 
         removeDom(main);
         getData.MatchDetail(id, username)
             .then(function(data){
-                console.log(data)
+                preloader.Hide("preloader");
+                feedbackbar.textContent = `${data.gamemode}: ${data.win}`;
+                nodeElement.Detail(data);
             })
         // console.log(id, username);
     }

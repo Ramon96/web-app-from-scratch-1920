@@ -1,14 +1,22 @@
-import { convertTimestamp } from "./convertTime.js";
-import { fetchSummoner } from "./helpers/fetchSummoner.js";
-import { fetchMatchHistory } from "./helpers/fetchMatchHistory.js";
-import { fetchMatchDetails } from "./helpers/fetchMatchDetails.js";
+import {
+    convertTimestamp
+} from "./convertTime.js";
+import {
+    fetchSummoner
+} from "./helpers/fetchSummoner.js";
+import {
+    fetchMatchHistory
+} from "./helpers/fetchMatchHistory.js";
+import {
+    fetchMatchDetails
+} from "./helpers/fetchMatchDetails.js";
 
 
 //retrieves and cleans the data by league of legends summoner ID
-async function getDataMH(name){
+async function getDataMH(name) {
     // incase of 403, it may be that the key has been expired (24 hours)
     const apiKey = "RGAPI-45100875-d616-4769-b33e-4c6ac48ab89b";
-    const cors  = "https://cors-anywhere.herokuapp.com/";
+    const cors = "https://cors-anywhere.herokuapp.com/";
     const api = "https://euw1.api.riotgames.com/lol/";
 
     const summonerInformation = await fetchSummoner(cors, api, apiKey, name);
@@ -19,24 +27,24 @@ async function getDataMH(name){
 }
 
 
-function cleanUp(matchHistory){
-    return matchHistory.matches.map(key =>{
+function cleanUp(matchHistory) {
+    return matchHistory.matches.map(key => {
         return {
             region: key.platformId,
             championId: key.champion,
             time: convertTimestamp(key.timestamp),
             lane: key.lane,
             premade: key.role,
-            queue: key.queue, 
+            queue: key.queue,
             season: key.season,
             gameKey: key.gameId
-        }   
+        }
     })
 }
 
-async function getDataMD(gameKey, username){
+async function getDataMD(gameKey, username) {
     const apiKey = "RGAPI-45100875-d616-4769-b33e-4c6ac48ab89b";
-    const cors  = "https://cors-anywhere.herokuapp.com/";
+    const cors = "https://cors-anywhere.herokuapp.com/";
     const api = "https://euw1.api.riotgames.com/lol/";
 
     const matchDetail = await fetchMatchDetails(gameKey, cors, api, apiKey);
@@ -44,21 +52,38 @@ async function getDataMD(gameKey, username){
     return personalDetail;
 }
 
-function personalMatchInfo(MatchDetail, username){
-    console.log(MatchDetail)
-    const participantID = MatchDetail.participantIdentities
-    .find(user => {
-        if(user.player.summonerName.toLowerCase() == username.toLowerCase()){
-            
-            return user;
-        }
-    }).participantId
-    
-    // .map(user => {
-    //     return user.participantId
-    // });
+function personalMatchInfo(MatchDetail, username) {
+    // console.log(MatchDetail)
 
-    console.log(participantID);
+    const participantID = MatchDetail.participantIdentities
+        .find(user => {
+            if (user.player.summonerName.toLowerCase() == username.toLowerCase()) {
+
+                return user;
+            }
+        }).participantId
+
+    const participantStats = MatchDetail.participants.find(key => {
+        if(key.participantId == participantID){
+            return key;
+        }
+    }).stats
+
+    const mode = MatchDetail.gameMode;
+
+   return transformStats(participantStats, mode);    
+}
+
+function transformStats(stats, mode){
+    return {
+        win: stats.win ? 'Victory' : 'Defeat',
+        kills: stats.kills,
+        deaths: stats.deaths,
+        dmg: stats.totalDamageDealtToChampions,
+        vision: stats.visionScore,
+        farm: stats.totalMinionsKilled,
+        gamemode: mode
+    }
 }
 
 const getData = {
@@ -66,4 +91,6 @@ const getData = {
     MatchDetail: getDataMD
 }
 
-export {getData} 
+export {
+    getData
+}
