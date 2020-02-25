@@ -1,7 +1,8 @@
-export async function fetchMatchHistory(summonerData, apiKey){
-    const matchApi = `https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${summonerData.accountId}?api_key=${apiKey}`;
+export async function fetchMatchHistory(summonerData, cors, api, apiKey){
+    const endpoint = `/match/v4/matchlists/by-account/${summonerData.accountId}`;
+    const url = `${cors}${api}${endpoint}?api_key=${apiKey}`
 
-    let matchHistory = fetch(matchApi);
+    let matchHistory = fetch(url);
     let response = await matchHistory;
     let handleResponse = await response.json();
 

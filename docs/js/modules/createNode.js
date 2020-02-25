@@ -1,7 +1,12 @@
-function createMatchNode(content, elementType, targetElement){
+function createMatchNode(content, elementType, targetElement, id){
     const element = document.createElement(elementType);
     element.textContent = content;
-    targetElement.appendChild(element)
+    
+    if(id){
+        element.setAttribute("href", `#match/${id}`);
+    }
+
+    targetElement.appendChild(element);
 
     return element;
 }

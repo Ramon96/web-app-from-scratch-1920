@@ -1,21 +1,20 @@
 import { convertTimestamp } from "./convertTime.js";
 import { fetchSummoner } from "./helpers/fetchSummoner.js";
 import { fetchMatchHistory } from "./helpers/fetchMatchHistory.js";
-
+import { fetchMatchDetails } from "./helpers/fetchMatchDetails.js";
 
 
 //retrieves and cleans the data by league of legends summoner ID
-async function getData(name){
-//     // incase of 403, it may be that the key has been expired (24 hours)
+async function getDataMH(name){
+    // incase of 403, it may be that the key has been expired (24 hours)
     const apiKey = "RGAPI-45100875-d616-4769-b33e-4c6ac48ab89b";
-    const url = `https://cors-anywhere.herokuapp.com/https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`;
+    const cors  = "https://cors-anywhere.herokuapp.com/";
+    const api = "https://euw1.api.riotgames.com/lol/";
 
-
-    const summonerInformation = await fetchSummoner(url);
-    const matchHistory = await fetchMatchHistory(summonerInformation, apiKey);
+    const summonerInformation = await fetchSummoner(cors, api, apiKey, name);
+    const matchHistory = await fetchMatchHistory(summonerInformation, cors, api, apiKey);
     const cleanData = cleanUp(matchHistory)
-    console.log(matchHistory);
-    // console.log(JSON.stringify(cleanData, 4, null))
+
     return cleanData;
 }
 
@@ -35,6 +34,36 @@ function cleanUp(matchHistory){
     })
 }
 
+async function getDataMD(gameKey, username){
+    const apiKey = "RGAPI-45100875-d616-4769-b33e-4c6ac48ab89b";
+    const cors  = "https://cors-anywhere.herokuapp.com/";
+    const api = "https://euw1.api.riotgames.com/lol/";
 
+    const matchDetail = await fetchMatchDetails(gameKey, cors, api, apiKey);
+    const personalDetail = personalMatchInfo(matchDetail, username)
+    return personalDetail;
+}
+
+function personalMatchInfo(MatchDetail, username){
+    console.log(MatchDetail)
+    const participantID = MatchDetail.participantIdentities
+    .find(user => {
+        if(user.player.summonerName.toLowerCase() == username.toLowerCase()){
+            
+            return user;
+        }
+    }).participantId
+    
+    // .map(user => {
+    //     return user.participantId
+    // });
+
+    console.log(participantID);
+}
+
+const getData = {
+    MatchHistory: getDataMH,
+    MatchDetail: getDataMD
+}
 
 export {getData} 
