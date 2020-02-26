@@ -11,10 +11,13 @@ function overview(matchDetails, username){
 }
 
 function detail(matchData){
-    console.log(matchData)
     const container = createMatchNode("", "span", document.querySelector("main"));
-    const champion = createMatchNode(matchData.champion, "h2", container);
+    const champion = createMatchNode("Champion: " + matchData.champion, "h2", container);
     const kills = createMatchNode("Kills: " + matchData.kills, "p", container);
+    const death = createMatchNode("Deaths: " + matchData.deaths, "p", container);
+    const dmg = createMatchNode("Dammage dealt: " + matchData.dmg, "p", container);
+    const vision = createMatchNode("Vision score: " + matchData.vision, "p", container);
+    const farm = createMatchNode("Creep score: " + matchData.farm, "p", container);
 }
 
 const nodeElement = {

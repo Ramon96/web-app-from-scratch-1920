@@ -1,5 +1,6 @@
 import { removeDom } from "../cleanDom.js";
 import { getData } from "../getData.js";
+import  getChampion  from "../getChampion.js";
 import { preloader } from "./preloader.js";
 import { nodeElement } from "../createComponent.js";
 import { createFilter} from "../createFilter.js"
@@ -36,11 +37,12 @@ const Routes = {
         const feedbackbar = document.getElementsByTagName('h2')[0];
 
         preloader.Show("preloader");
-        main.style.display = "block"
         removeDom(main);
+        main.style.display = "block";
         getData.MatchDetail(id, username)
             .then(function(data){
                 preloader.Hide("preloader");
+                getChampion();
                 feedbackbar.textContent = `${data.gamemode}: ${data.win}`;
                 nodeElement.Detail(data);
             })

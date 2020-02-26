@@ -53,33 +53,22 @@ async function getDataMD(gameKey, username) {
 }
 
 function personalMatchInfo(MatchDetail, username) {
-    console.log(MatchDetail)
-
     const participantID = MatchDetail.participantIdentities
         .find(user => {
             if (user.player.summonerName.toLowerCase() == username.toLowerCase()) {
-
                 return user;
             }
         }).participantId
-
-        const champion = MatchDetail.participants.find(user => {
-            if(user.participantId == participantID){
-                return user;
-            }
-        }).championId
-
-        console.log("champion: " + champion)
 
     const participantStats = MatchDetail.participants.find(key => {
         if(key.participantId == participantID){
             return key;
         }
-    }).stats
+    })
 
     const mode = MatchDetail.gameMode;
 
-   return transformStats(participantStats, mode, champion);    
+   return transformStats(participantStats.stats, mode, participantStats.championId);    
 }
 
 function transformStats(stats, mode, championId){
