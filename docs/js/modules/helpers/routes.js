@@ -18,7 +18,7 @@ const Routes = {
 
         getData.MatchHistory(username)
             .then(function(data){
-                createFilter(data, username);
+                // createFilter(data, username);
                 removeDom(main);
                 preloader.Hide("preloader");
                 let championArray = [];
