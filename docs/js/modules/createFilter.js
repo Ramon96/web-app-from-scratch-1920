@@ -2,7 +2,7 @@ import {showSelected} from "./filterChampion.js"
 
 
 function createFilter(data, username) {
-
+    console.log(data)
     const champions = [...new Set(data.map(key => {
         return key.championId
     }))].sort(function(a, b){return a - b}) ;
