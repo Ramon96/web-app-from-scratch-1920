@@ -11,7 +11,10 @@ function overview(matchDetails, username){
 }
 
 function detail(matchData){
-
+    console.log(matchData)
+    const container = createMatchNode("", "span", document.querySelector("main"));
+    const champion = createMatchNode(matchData.champion, "h2", container);
+    const kills = createMatchNode("Kills: " + matchData.kills, "p", container);
 }
 
 const nodeElement = {

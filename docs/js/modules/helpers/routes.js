@@ -36,7 +36,7 @@ const Routes = {
         const feedbackbar = document.getElementsByTagName('h2')[0];
 
         preloader.Show("preloader");
-
+        main.style.display = "block"
         removeDom(main);
         getData.MatchDetail(id, username)
             .then(function(data){

@@ -53,7 +53,7 @@ async function getDataMD(gameKey, username) {
 }
 
 function personalMatchInfo(MatchDetail, username) {
-    // console.log(MatchDetail)
+    console.log(MatchDetail)
 
     const participantID = MatchDetail.participantIdentities
         .find(user => {
@@ -63,6 +63,14 @@ function personalMatchInfo(MatchDetail, username) {
             }
         }).participantId
 
+        const champion = MatchDetail.participants.find(user => {
+            if(user.participantId == participantID){
+                return user;
+            }
+        }).championId
+
+        console.log("champion: " + champion)
+
     const participantStats = MatchDetail.participants.find(key => {
         if(key.participantId == participantID){
             return key;
@@ -71,10 +79,10 @@ function personalMatchInfo(MatchDetail, username) {
 
     const mode = MatchDetail.gameMode;
 
-   return transformStats(participantStats, mode);    
+   return transformStats(participantStats, mode, champion);    
 }
 
-function transformStats(stats, mode){
+function transformStats(stats, mode, championId){
     return {
         win: stats.win ? 'Victory' : 'Defeat',
         kills: stats.kills,
@@ -82,7 +90,8 @@ function transformStats(stats, mode){
         dmg: stats.totalDamageDealtToChampions,
         vision: stats.visionScore,
         farm: stats.totalMinionsKilled,
-        gamemode: mode
+        gamemode: mode,
+        champion: championId
     }
 }
 
