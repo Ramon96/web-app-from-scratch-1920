@@ -1,9 +1,9 @@
 import { removeDom } from "../cleanDom.js";
 import { getData } from "../getData.js";
-import  getChampion  from "../getChampion.js";
 import { preloader } from "./preloader.js";
 import { nodeElement } from "../createComponent.js";
 import { createFilter} from "../createFilter.js"
+import  getChampion  from "../getChampion.js";
 
 
 const Routes = {
@@ -22,7 +22,10 @@ const Routes = {
                 removeDom(main);
                 preloader.Hide("preloader");
                 data.forEach(match => {
-                    nodeElement.Overview(match, username)
+                    getChampion(match.championId).then(champion => { 
+                        nodeElement.Overview(match, username, champion)
+                    })
+                    // nodeElement.Overview(match, username)
                 })
             })
             .catch((err) =>{
@@ -42,11 +45,11 @@ const Routes = {
         getData.MatchDetail(id, username)
             .then(function(data){
                 preloader.Hide("preloader");
-                getChampion();
                 feedbackbar.textContent = `${data.gamemode}: ${data.win}`;
-                nodeElement.Detail(data);
+                getChampion(data.champion).then(champion => { 
+                    nodeElement.Detail(data, champion);
+                })  
             })
-        // console.log(id, username);
     }
 
 }

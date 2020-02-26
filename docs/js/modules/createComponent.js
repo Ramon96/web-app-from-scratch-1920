@@ -1,8 +1,8 @@
 import {createMatchNode} from "./createNode.js";
 
-function overview(matchDetails, username){
+function overview(matchDetails, username, championData){
     const container = createMatchNode("", "div", document.querySelector("main"));
-    const title  = createMatchNode("Champion ID: " + matchDetails.championId, "h3", container);
+    const title  = createMatchNode("Champion: " + championData.name, "h3", container);
     const date = createMatchNode("Played: " + matchDetails.time, "p", container);
     const lane = createMatchNode("Lane: " + matchDetails.lane, "p", container);
     const gameId = createMatchNode("Match details", "a" ,container, matchDetails.gameKey + "/" + username);
@@ -10,9 +10,9 @@ function overview(matchDetails, username){
     return container;
 }
 
-function detail(matchData){
+function detail(matchData, championData){
     const container = createMatchNode("", "span", document.querySelector("main"));
-    const champion = createMatchNode("Champion: " + matchData.champion, "h2", container);
+    const champion = createMatchNode("Champion: " + championData.name, "h2", container);
     const kills = createMatchNode("Kills: " + matchData.kills, "p", container);
     const death = createMatchNode("Deaths: " + matchData.deaths, "p", container);
     const dmg = createMatchNode("Dammage dealt: " + matchData.dmg, "p", container);

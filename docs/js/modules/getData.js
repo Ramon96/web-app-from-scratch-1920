@@ -67,12 +67,11 @@ function personalMatchInfo(MatchDetail, username) {
     })
 
     const mode = MatchDetail.gameMode;
-
-   return transformStats(participantStats.stats, mode, participantStats.championId);    
+    return transformStats(participantStats.stats, mode, participantID);    
 }
 
 function transformStats(stats, mode, championId){
-    return {
+   return {
         win: stats.win ? 'Victory' : 'Defeat',
         kills: stats.kills,
         deaths: stats.deaths,
