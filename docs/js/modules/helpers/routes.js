@@ -21,19 +21,22 @@ const Routes = {
                 // createFilter(data, username);
                 removeDom(main);
                 preloader.Hide("preloader");
-                let championArray = [];
-                data.forEach(match => {
-                    getChampion(match.championId).then(champion => { 
-                        nodeElement.Overview(match, username, champion);
-                        championArray.push(champion.name)
+                // let championArray = [];
+                let championArray = data.map(match => {
+                    return getChampion(match.championId).then(champion => { 
+                        nodeElement.Overview(match, username, champion.name);
+                        // championArray.push(champion.name)
+                        return champion.name
                     })
                     // Deze the moet eigenlijk een array van alle champions door geven.
                     // nodeElement.Overview(match, username)
                 })
-                console.log(championArray)
-                return championArray
+                // console.log(championArray)
+                // Promise.all(championArray)
+                // Promise.all(championArray).then(snikkel => console.log(snikkel))
+                return Promise.all(championArray)
             })
-            .then(champion => createFilter(champion, username)) 
+            .then(champion => {console.log(champion); createFilter(champion, username) }) 
             .catch((err) =>{
                 removeDom(main);
                 preloader.Hide("preloader");

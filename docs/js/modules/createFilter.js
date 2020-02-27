@@ -3,14 +3,20 @@ import {showSelected} from "./filterChampion.js"
 
 function createFilter(data, username) {
     console.log(data)
+    // data.then(lul => console.log(lul))
     // const champions = [...new Set(data.map(key => {
     //     return key.championId
     // }))].sort(function(a, b){return a - b}) ;
 
     // let champions = data.filter((value, index, array) => array.indexOf(value) === index)
 
+    // const test = data.map(item => typeof item)
 
-    console.log(champions)
+
+     let champions = [...new Set(data)]
+
+    // let champions = Array.from(new Set(test))
+     console.log(champions)
 
     const dropdown = document.createElement("select");
 

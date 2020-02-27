@@ -2,7 +2,7 @@ import {createMatchNode} from "./createNode.js";
 
 function overview(matchDetails, username, championData){
     const container = createMatchNode("", "div", document.querySelector("main"));
-    const title  = createMatchNode("Champion: " + championData.name, "h3", container);
+    const title  = createMatchNode("Champion: " + championData, "h3", container);
     const date = createMatchNode("Played: " + matchDetails.time, "p", container);
     const lane = createMatchNode("Lane: " + matchDetails.lane, "p", container);
     const gameId = createMatchNode("Match details", "a" ,container, matchDetails.gameKey + "/" + username);
