@@ -7,8 +7,10 @@ function createFilter(data, username) {
     //     return key.championId
     // }))].sort(function(a, b){return a - b}) ;
 
-    const champions = [new Set(data)].sort() ;
+    // let champions = data.filter((value, index, array) => array.indexOf(value) === index)
 
+
+    console.log(champions)
 
     const dropdown = document.createElement("select");
 

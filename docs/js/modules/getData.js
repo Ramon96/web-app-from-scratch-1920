@@ -67,7 +67,7 @@ function personalMatchInfo(MatchDetail, username) {
     })
 
     const mode = MatchDetail.gameMode;
-    return transformStats(participantStats.stats, mode, participantID);    
+    return transformStats(participantStats.stats, mode, participantStats.championId);    
 }
 
 function transformStats(stats, mode, championId){

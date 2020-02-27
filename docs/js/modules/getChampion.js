@@ -3,7 +3,6 @@ function  getChampion(championId){
         .then(res => res.json())
         .then(data => {
             const chosenChampion = findInArray(data.data, championId)
-            console.log(chosenChampion[0])
             return chosenChampion[0];
         })
     return champion;

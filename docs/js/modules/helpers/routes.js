@@ -30,6 +30,7 @@ const Routes = {
                     // Deze the moet eigenlijk een array van alle champions door geven.
                     // nodeElement.Overview(match, username)
                 })
+                console.log(championArray)
                 return championArray
             })
             .then(champion => createFilter(champion, username)) 
@@ -51,7 +52,7 @@ const Routes = {
             .then(function(data){
                 preloader.Hide("preloader");
                 feedbackbar.textContent = `${data.gamemode}: ${data.win}`;
-                getChampion(data.champion).then(champion => { 
+                getChampion(data.champion ).then(champion => { 
                     nodeElement.Detail(data, champion);
                 })  
             })
