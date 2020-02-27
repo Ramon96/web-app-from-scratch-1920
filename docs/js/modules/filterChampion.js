@@ -1,9 +1,9 @@
 import { removeDom } from "./cleanDom.js";
 import { nodeElement } from "./createComponent.js";
 
-function showSelected(selected, matchHistory, username){
-    const filtered = matchHistory.filter(obj => {
-        if(obj.championId == selected){
+function showSelected(selected, champions, username){
+    const filtered = champions.filter(obj => {
+        if(obj == selected){
             return true;
         }
     })
