@@ -25,8 +25,10 @@ Use the command \
 To clone the project locally.
 <!-- ...but how does one use this project? What are its features 🤔 -->
 ## Actor Diagram
+![Actor Diagram](https://github.com/Ramon96/web-app-from-scratch-1920/blob/master/actorDiagram.png?raw=true)
 
 ## Interaction Diagram
+![Interaction Diagram](https://github.com/Ramon96/web-app-from-scratch-1920/blob/master/interactiondiagram.png?raw=true)
 
 ## The API
 Im made use of the league of legends api.
